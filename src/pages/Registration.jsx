@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
 import "../formStyles.css";
+import registrerStudent from "../api/endpoints/registrerStudent"
+
 const Registration = () => {
   let navigate = useNavigate();
   const [alert, setAlert] = useState({ show: false, Title: "", message: "" });
@@ -12,22 +14,40 @@ const Registration = () => {
     watch,
     formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => {
-    let ansok = false;
     if (data) {
-      console.log(JSON.stringify(data));
-      navigate("/test/1");
+      registrerStudent(data)
+      .then(function (response) {
+        if (response) {
+          setAlert({
+            show: true,
+            title: "Listo",
+            message: response
+          });
+          reset();
+          setTimeout(() => {
+            navigate("test/1");
+          }, 2000);
+        }
+    })
+    .catch(function (error) {
+      setAlert({
+        show: true,
+        title: "OMG!",
+        message: error?.response?.data?.Mensaje,
+        });
+      });
     } else {
       setAlert({
         show: true,
-        title: "Advertencia",
-        message: "Usuario ya registrado en el sistema.",
+        title: "Lo siento",
+        message: "El usuario ya registrado.",
       });
     }
   };
-  console.log(watch("example")); // watch input value by passing the name of it
 
-  return (
+ return (
     <div>
       <div className="fatherTitle">
         <div className="headerTitle">
@@ -40,7 +60,7 @@ const Registration = () => {
         <div className="row justify-content-center">
           <div className="col-md-5">
             <div className="card">
-              <h2 className="card-title text-center">Regístrate</h2>
+              <h2 className="card-titletext-center">Regístrate</h2>
               <div className="card-bo.dy py-md-4">
                 {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
                 <form onSubmit={handleSubmit(onSubmit)} _lpchecked="1">
@@ -93,7 +113,7 @@ const Registration = () => {
                       data-toggle="modal"
                       data-target="#exampleModal"
                     >
-                      Enviar
+                      Aceptar
                     </button>
                   </div>
                 </form>

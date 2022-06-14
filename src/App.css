@@ -53,7 +53,8 @@ h1 {
 
 .test {
   display: flex;
-  gap: 400px;
+  /*gap: 400px;*/
+  gap: 12px;
   justify-content: center;
 }
 
@@ -62,8 +63,10 @@ canvas {
 }
 
 .testView {
+  margin-right: 16px;
   height: 300px;
   width: 300px;
+  margin-top: 10px;
 }
 
 .testTitle {
@@ -73,7 +76,7 @@ canvas {
 .ordersView {
   display: flex;
   flex-wrap: wrap;
-  width: 80px;
+  width: 80px; /* 60px*/
   height: 160px;
   justify-content: center;
   margin-top: 20px;
@@ -92,13 +95,13 @@ button {
 
 .buttonLeftStyles {
   border-radius: 20px;
-  background-color: #ff6961;
+  background-color: #da9604;
   padding: 0.5rem;
 }
 
 .buttonRightStyles {
   border-radius: 20px;
-  background-color: #83a83b;
+  background-color: #abab26;
   padding: 0.5rem;
 }
 
@@ -113,7 +116,13 @@ ul {
   /* align-content: end; */
   position: absolute;
   bottom: 0;
-  left: 38%;
+  margin-bottom: 0;
+  /*left: 38%;*/
+}
+
+li {
+  margin-right: 20px;
+  color: gray;
 }
 
 div.picture1 {
@@ -124,11 +133,10 @@ div.picture1 {
   background-color: "yellow";
   margin: 0; /* If you want no margin */
   padding: 0; /*if your want to padding */
-}
+} 
 
 
-
-/* CSS btn.30*/
+/* CSS btn.30 Comprobar resultados*/
 .button-30 {
   align-items: center;
   appearance: none;
@@ -174,7 +182,7 @@ div.picture1 {
   transform: translateY(2px);
 }
 
-/* CSS */
+/* CSS Boton iniciar prueba*/
 .button-86 {
   all: unset;
   width: 100px;
@@ -242,41 +250,6 @@ div.picture1 {
   transform: translate(0, 5%);
 }
 
-
-/* CSS */
-.button-31 {
-  background-color: #222;
-  border-radius: 4px;
-  border-style: none;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font-family: "Farfetch Basis","Helvetica Neue",Arial,sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1.5;
-  margin: 0;
-  max-width: none;
-  min-height: 44px;
-  min-width: 10px;
-  outline: none;
-  overflow: hidden;
-  padding: 9px 20px 8px;
-  position: relative;
-  text-align: center;
-  text-transform: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: 100%;
-}
-
-.button-31:hover,
-.button-31:focus {
-  opacity: .75;
-}
-
 /* MODAL STYELS */
 #overlay {
   position: fixed; /* Sit on top of the page content */
@@ -304,7 +277,7 @@ div.picture1 {
 }
 
 @media (min-width: 768px) {
-  .button-73 {
+  .button-86 {
     font-size: 1.5rem;
     padding: 0.75rem 2rem;
   }

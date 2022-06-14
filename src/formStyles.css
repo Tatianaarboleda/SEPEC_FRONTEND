@@ -5,23 +5,26 @@ body{
   font-family: 'PT Sans', sans-serif;
   background-color: #0093E9;
   background-image: url("./images/Fondo.jpg");
-  height: 5rem;
-
 }
+
 h2{
   padding-top: 1.5rem;
 }
+
 a{
   color: #333;
 }
+
 a:hover{
   color: #da5767;
   text-decoration: none;
 }
+
 .card{
   background-color: transparent;
   top: 10%;
 }
+
 .form-control{
   background-color: #f8f9fa;
   padding: 20px;
@@ -30,7 +33,6 @@ a:hover{
 }
 
 .form-control:focus {
-
     color: #000000;
     background-color: #ffffff;
     border: 3px solid #da5767;
@@ -44,9 +46,8 @@ a:hover{
   background: #da5767;
   border: 2px solid #da5767;
 }
-.btn-primary:hover {
 
-    
+.btn-primary:hover {
     background-color: #df8c96;
     border-color: #df8c96;
   transition: .3s;

@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Modal from "./components/Modal";
 import matriz from "./images/Matrix.jpeg";
 
@@ -12,8 +12,6 @@ const Tests = () => {
   const [positionLeft, setPositionLeft] = useState(0);
   const [startTest, setStartTest] = useState();
   const [anserwesSent, setAnserwesSent] = useState(false);
-  const [blockRoute, setBlockRoute] = useState([{ }]);
-
   const [showTrace, setShowTrace] = useState();
   let modifier = 38;
   const block = document.getElementById("block");
@@ -21,40 +19,25 @@ const Tests = () => {
   const [displayEl, setDisplayEl] = useState();
   const [alert, setAlert] = useState({ show: false, Title: "", message: "" });
   const [currentTest, setCurrentTest] = useState(1);
+  let instructionsList = document.querySelector(".odersView");
+  let { id } = useParams();
+  const [test, setTest] = useState({});
+  const [blockRoute, setBlockRoute] = useState([]);
   
-  // dominio/pregunta/1
-  let test = {
-    goalPosition: { top: "360px", left: "474px" },
-    startPostion: { top: 192, left: 194 },
-  };
-
-  const { goalPosition, startPostion, obstacles } = test;
-
-  const handleBlockedByBug = (nextTop, nextLeft) => {
-    let availableToMove = true;
-    // console.log(nextTop, nextLeft);
-    obstacles.map((obstacle) => {
-      if (`${obstacle.top}px` === nextTop) {
-        console.log(nextTop, nextLeft);
-        console.log(`${obstacle.top}px`);
-        console.log(nextTop);
-
-        // document.getElementById("block").style.top = `${
-        //   parseInt(nextTop) - modifier
-        // }px`;
-
-        // availableToMove = false;
-      }
-      // else if (`${obstacle.left}px` === nextLeft) {
-      //   document.getElementById("block").style.left = `${
-      //     parseInt(nextLeft) + modifier
-      //   }px`;
-      // } else {
-      //   return;
-      // }
-    });
-    // return availableToMove;
-  };
+  useEffect(() => { 
+    getCoordinates(id)
+      .then(function (response) {
+        if(response){
+          let data = response[0];
+          setTest({
+            startPostion: {top: data[1], left: data[0]},
+            goalPosition: {top: data[3], left: data[2]},
+          });
+        }
+      })
+  })
+  
+  const { goalPosition, startPostion } = test || {};
 
   const handleDirectionClick = (e) => {
     let instructionsList = document.querySelector(".ordersView");
@@ -68,21 +51,21 @@ const Tests = () => {
           if (`${parseInt(style.top) + modifier}` >= 207) {
             style.top = `${parseInt(style.top) - modifier}px`;
           } else {
-            alert("estas en el borde");
+            alert("Te saliste");
           }
           break;
         case "abajo":
           if (`${parseInt(style.top) + modifier}` <= 433) {
             style.top = `${parseInt(style.top) + modifier}px`;
           } else {
-            alert("estas en el borde");
+            alert("Te saliste");
           }
           break;
         case "izquierda":
           if (`${parseInt(style.left) + modifier}` >= 350) {
             style.left = `${parseInt(style.left) - modifier}px`;
           } else {
-            alert("estas en el borde");
+            alert("Te saliste");
           }
 
           break;
@@ -90,7 +73,7 @@ const Tests = () => {
           if (`${parseInt(style.left) + modifier}` <= 581) {
             style.left = `${parseInt(style.left) + modifier}px`;
           } else {
-            alert("estas en el borde");
+            alert("Te saliste");
           }
           break;
         default:
@@ -98,9 +81,7 @@ const Tests = () => {
       }
       setPositionTop(style.top);
       setPositionLeft(style.left);
-      // handleBlockedByBug(style.top, style.left);
       setBlockRoute(blockRoute.concat({ top: style.top, left: style.left }));
-      console.log(style.top, style.left, "top left");
     } else {
       return;
     }
@@ -125,26 +106,31 @@ const Tests = () => {
   const handleNextTest = () => {
     setStartTest(false);
     setAnserwesSent(false);
-    // handleStartTest();
-    navigate("/test/2");
+    let container = document.querySelector(".testView");
+    var child = container.firstElementChild;
+    container.removeChild(child);
+    setBlockRoute([]);
+    setDisplayArray([]);
+    setShowTrace(false);
+    block.style.display = "none";
+    document.getElementById("start").style.display = "none";
+    document.getElementById("goal").style.display = "none";
+    instructionsList.innerHTML = "";
+    navigate(`/test/${currentTest}`);
   };
 
   const revealBlock = () => {
     setShowTrace(true);
-    let block = document.getElementById("block");
     block.style.zIndex = 10;
     block.style.display = "flex";
   };
 
   const validateSequence = () => {
+    if(startTest){
     setCurrentTest(currentTest <= 5 ? currentTest + 1 : null);
     setAnserwesSent(true);
-    // let data = {
-    // };
+
     const { top, left } = goalPosition;
-    // handleNextTest();
-    console.log(test.goalPosition);
-    console.log("top left respuesta usuario:>> ", positionTop, positionLeft);
     if (top === positionTop && left === positionLeft) {
       setAlert({
         show: true,
@@ -154,7 +140,6 @@ const Tests = () => {
       revealBlock();
     } else {
       revealBlock();
-
       setAlert({
         show: true,
         title: "Oh, rayos",
@@ -162,6 +147,9 @@ const Tests = () => {
       });
       return;
     }
+  } else{
+    return;
+  }
   };
 
   const delay = (ms) =>
@@ -174,7 +162,7 @@ const Tests = () => {
   useEffect(() => {
     (async function () {
       for (let el of blockRoute) {
-        await delay(1000);
+        await delay(500);
         setDisplayEl(el);
       }
       setDisplayEl(undefined);
@@ -190,7 +178,7 @@ const Tests = () => {
       {alert.show && <Modal config={alert} setAlert={setAlert} />}
       <div className="fatherTitle">
         <div className="headerTitle">
-          <h1 className="">SEPEC PRUEBA</h1>
+          <h1 className="">SEPEC TEST</h1>
         </div>
         <div></div>
       </div>
@@ -251,32 +239,12 @@ const Tests = () => {
           width: "30px",
           height: "34px",
           position: "absolute",
-          top: goalPosition.top,
-          left: goalPosition.left,
+          top: goalPosition?.top,
+          left: goalPosition?.left,
         }}
         src="https://img.icons8.com/emoji/48/undefined/dragon-face.png"
         alt="goal"
       />
-      {/* {obstacles.map((obstacle, index) => (
-        <div
-          key={index}
-          id="obstacle"
-          style={{
-            display: "flex",
-
-            width: "23px",
-            height: "23px",
-            position: "absolute",
-            top: obstacle.top,
-            left: obstacle.left,
-          }}
-        >
-          <img
-            src="https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/64/undefined/external-bug-coding-kiranshastry-lineal-color-kiranshastry.png"
-            alt="bug"
-          />
-        </div>
-      ))} */}
 
       <div className="test">
         <div className="testView">
@@ -334,9 +302,10 @@ const Tests = () => {
       <div
         id="actions"
         style={{
-          display: "flex",
+          /*display: "flex",
           "justify-content": "center",
-          gap: "23px",
+          gap: "23px",*/
+          width: "20rem"
         }}
       >
         <button
