@@ -12,9 +12,8 @@ const Tests = () => {
   const [positionLeft, setPositionLeft] = useState(0);
   const [startTest, setStartTest] = useState();
   const [anserwesSent, setAnserwesSent] = useState(false);
-  const [blockRoute, setBlockRoute] = useState([
-    { top: "234px", left: "196px" },
-  ]);
+  const [blockRoute, setBlockRoute] = useState([{ }]);
+
   const [showTrace, setShowTrace] = useState();
   let modifier = 38;
   const block = document.getElementById("block");
@@ -22,8 +21,8 @@ const Tests = () => {
   const [displayEl, setDisplayEl] = useState();
   const [alert, setAlert] = useState({ show: false, Title: "", message: "" });
   const [currentTest, setCurrentTest] = useState(1);
+  
   // dominio/pregunta/1
-
   let test = {
     goalPosition: { top: "360px", left: "474px" },
     startPostion: { top: 192, left: 194 },
@@ -209,8 +208,8 @@ const Tests = () => {
           width: "30px",
           height: "34px",
           position: "absolute",
-          top: startPostion.top,
-          left: startPostion.left,
+          top: startPostion?.top,
+          left: startPostion?.left,
         }}
         src="https://lasimagenesdegoku.com/wp-content/uploads/2018/02/Small-Goku.png"
         alt="start"
@@ -222,8 +221,8 @@ const Tests = () => {
           width: "30px",
           height: "34px",
           position: "absolute",
-          top: "167px",
-          left: "294px",
+          top: startPostion?.top,
+          left: startPostion?.left,
         }}
         src="https://i.pinimg.com/originals/a5/f9/a2/a5f9a2eb5c0bfb1f66988696e1f31334.png"
         alt="start"
@@ -354,6 +353,11 @@ const Tests = () => {
         >
           Comprobar ruta
         </button>
+
+        <button style={{ marginLeft: 60 }}>
+        <Link to="/report">Reportes</Link>
+      </button>
+
       </div>
       {anserwesSent && (
         <aside style={{ position: "absolute", right: "0", top: "50%" }}>
@@ -361,10 +365,6 @@ const Tests = () => {
           <button onClick={handleNextTest}>test {currentTest}</button>
         </aside>
       )}
-      <button style={{ marginLeft: 60 }}>
-        <Link to="/report">Ver reporte</Link>
-      </button>
-    
     </div>
   );
 };
