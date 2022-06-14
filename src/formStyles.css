@@ -4,7 +4,9 @@ body{
   /* background: #fff; */
   font-family: 'PT Sans', sans-serif;
   background-color: #0093E9;
-  background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+  background-image: url("./images/Fondo.jpg");
+  height: 5rem;
+
 }
 h2{
   padding-top: 1.5rem;
@@ -17,13 +19,13 @@ a:hover{
   text-decoration: none;
 }
 .card{
-  border: 0.40rem solid #f8f9fa;
+  background-color: transparent;
   top: 10%;
 }
 .form-control{
   background-color: #f8f9fa;
   padding: 20px;
-  padding: 25px 15px;
+  padding: 15px 5px;
   margin-bottom: 1.3rem;
 }
 

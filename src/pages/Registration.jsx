@@ -31,7 +31,7 @@ const Registration = () => {
     <div>
       <div className="fatherTitle">
         <div className="headerTitle">
-          <h1 className="">Pruebas de Pensamiento Computacional</h1>
+          <h1 className="">SEPEC PRUEBA</h1>
         </div>
         <div></div>
       </div>
@@ -40,7 +40,7 @@ const Registration = () => {
         <div className="row justify-content-center">
           <div className="col-md-5">
             <div className="card">
-              <h2 className="card-title text-center">Formulario de Registro</h2>
+              <h2 className="card-title text-center">Regístrate</h2>
               <div className="card-bo.dy py-md-4">
                 {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
                 <form onSubmit={handleSubmit(onSubmit)} _lpchecked="1">
@@ -50,11 +50,11 @@ const Registration = () => {
                       type="number"
                       className="form-control"
                       id="identification"
-                      placeholder="Cedula"
+                      placeholder="Cédula"
                     />
                     {errors.identification && (
                       <span style={{ color: "red" }}>
-                        Este campo es requerido
+                        Este campo es obligatorio
                       </span>
                     )}
                   </div>
@@ -64,11 +64,11 @@ const Registration = () => {
                       type="text"
                       className="form-control"
                       id="name"
-                      placeholder="Nombre"
+                      placeholder="Nombre completo"
                     />
                     {errors.name && (
                       <span style={{ color: "red" }}>
-                        Este campo es requerido
+                        Este campo es obligatorio
                       </span>
                     )}
                   </div>
@@ -78,11 +78,11 @@ const Registration = () => {
                       type="email"
                       className="form-control"
                       id="email"
-                      placeholder="Correo electrónico"
+                      placeholder="Correo institucional"
                     />
                     {errors.email && (
                       <span style={{ color: "red" }}>
-                        Este campo es requerido
+                        Este campo es obligatorio 
                       </span>
                     )}
                   </div>

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "./components/Modal";
-// import princes from "../public/test2";
+import matriz from "./images/Matrix.jpeg";
 
 const Tests = () => {
   let navigate = useNavigate();
@@ -13,7 +13,7 @@ const Tests = () => {
   const [startTest, setStartTest] = useState();
   const [anserwesSent, setAnserwesSent] = useState(false);
   const [blockRoute, setBlockRoute] = useState([
-    { top: "167px", left: "294px" },
+    { top: "234px", left: "196px" },
   ]);
   const [showTrace, setShowTrace] = useState();
   let modifier = 38;
@@ -25,8 +25,8 @@ const Tests = () => {
   // dominio/pregunta/1
 
   let test = {
-    goalPosition: { top: "364px", left: "505px" },
-    startPostion: { top: 167, left: 294 },
+    goalPosition: { top: "360px", left: "474px" },
+    startPostion: { top: 192, left: 194 },
   };
 
   const { goalPosition, startPostion, obstacles } = test;
@@ -114,9 +114,9 @@ const Tests = () => {
     let ctx = canvasObject.getContext("2d");
     setStartTest(true);
 
-    ctx.canvas.width = 300;
+    ctx.canvas.width = 330;
     ctx.canvas.height = 300;
-    ctx.drawImage(canvasBg, 2, 2);
+    ctx.drawImage(canvasBg, 0, 0);
     containerTestView.appendChild(canvasObject);
     document.getElementById("start").style.display = "flex";
     document.getElementById("goal").style.display = "flex";
@@ -149,8 +149,8 @@ const Tests = () => {
     if (top === positionTop && left === positionLeft) {
       setAlert({
         show: true,
-        title: "Genial",
-        message: "Lo has logrado, llegase al objetivo.",
+        title: "Excelente",
+        message: "Has conseguido llegar al dragón",
       });
       revealBlock();
     } else {
@@ -158,8 +158,8 @@ const Tests = () => {
 
       setAlert({
         show: true,
-        title: "Mala suerte",
-        message: "Casi lo logras, cierra este modal para continuar.",
+        title: "Oh, rayos",
+        message: "Por poco lo consigues, presiona aceptar para pasar a la siguiente.",
       });
       return;
     }
@@ -191,41 +191,41 @@ const Tests = () => {
       {alert.show && <Modal config={alert} setAlert={setAlert} />}
       <div className="fatherTitle">
         <div className="headerTitle">
-          <h1 className="">Pruebas de Pensamiento Computacional</h1>
+          <h1 className="">SEPEC PRUEBA</h1>
         </div>
         <div></div>
       </div>
       <img src="" alt="" />
       <img
         className="imgBg"
-        src="https://i.imgur.com/LayNEQc.png"
-        style={{ display: "none", height: "100px" }}
+        src={matriz}
+        style={{ display: "none", height: "80px" , width: "80px" }}
         alt="grid img"
       />
       <img
         id="start"
         style={{
           display: "none",
-          width: "83px",
-          height: "63px",
+          width: "30px",
+          height: "34px",
           position: "absolute",
           top: startPostion.top,
           left: startPostion.left,
         }}
-        src="https://gurutecno.com/wp-content/uploads/2016/12/Mario-Run.png"
+        src="https://lasimagenesdegoku.com/wp-content/uploads/2018/02/Small-Goku.png"
         alt="start"
       />
       <img
         id="block"
         style={{
           display: "none",
-          width: "83px",
-          height: "63px",
+          width: "30px",
+          height: "34px",
           position: "absolute",
           top: "167px",
           left: "294px",
         }}
-        src="https://gurutecno.com/wp-content/uploads/2016/12/Mario-Run.png"
+        src="https://i.pinimg.com/originals/a5/f9/a2/a5f9a2eb5c0bfb1f66988696e1f31334.png"
         alt="start"
       />
       {showTrace &&
@@ -235,13 +235,13 @@ const Tests = () => {
             id="block"
             style={{
               display: showTrace ? "flex" : "none",
-              width: "83px",
-              height: "63px",
+              width: "30px",
+              height: "34px",
               position: "absolute",
               top: coodinates.top,
               left: coodinates.left,
             }}
-            src="https://gurutecno.com/wp-content/uploads/2016/12/Mario-Run.png"
+            src="https://i.pinimg.com/originals/a5/f9/a2/a5f9a2eb5c0bfb1f66988696e1f31334.png"
             alt="start"
           />
         ))}
@@ -249,13 +249,13 @@ const Tests = () => {
         id="goal"
         style={{
           display: "none",
-          width: "45px",
-          height: "45px",
+          width: "30px",
+          height: "34px",
           position: "absolute",
           top: goalPosition.top,
           left: goalPosition.left,
         }}
-        src={require("./images/test3.png")}
+        src="https://img.icons8.com/emoji/48/undefined/dragon-face.png"
         alt="goal"
       />
       {/* {obstacles.map((obstacle, index) => (
@@ -294,7 +294,7 @@ const Tests = () => {
               <img
                 name="arriba"
                 className="imgSize button"
-                src="https://img.icons8.com/stickers/100/000000/thick-arrow-pointing-up.png"
+                src="https://img.icons8.com/doodle/48/undefined/up--v1.png"
                 alt="up icon"
               />
             </button>
@@ -303,17 +303,18 @@ const Tests = () => {
             <button className="buttonLeftStyles" onClick={handleDirectionClick}>
               <img
                 name="izquierda"
-                className="imgSize"
+                className="imgSize leftSide"
                 alt="left icon button"
-                src="https://img.icons8.com/stickers/100/undefined/arrow-pointing-left.png"
+                src="https://img.icons8.com/doodle/48/undefined/up--v1.png"
               />
             </button>
             <button className="buttonStyle" onClick={handleDirectionClick}>
               <img
                 name="abajo"
-                className="imgSize"
-                src="https://img.icons8.com/stickers/100/000000/thick-arrow-pointing-down.png"
+                className="imgSize downSide"
+                src="https://img.icons8.com/doodle/48/undefined/up--v1.png"
                 alt="down icon"
+
               />
             </button>
             <button
@@ -322,92 +323,48 @@ const Tests = () => {
             >
               <img
                 name="derecha"
-                className="imgSize"
+                className="imgSize rightSide"
                 alt="right icon button"
-                src="https://img.icons8.com/stickers/100/undefined/right.png"
+                src="https://img.icons8.com/doodle/48/undefined/up--v1.png"
               />
             </button>
           </div>
           <div className="ordersView"></div>
         </div>
-        <div
-          id="actions"
-          style={{
-            width: "20rem",
-          }}
+      </div>
+      <div
+        id="actions"
+        style={{
+          display: "flex",
+          "justify-content": "center",
+          gap: "23px",
+        }}
+      >
+        <button
+          className="button-86"
+          onClick={handleStartTest}
+          disabled={startTest}
         >
-          <button
-            className="button-73"
-            onClick={handleStartTest}
-            disabled={startTest}
-          >
-            iniciar test
-          </button>
-          <button
-            className="button-29"
-            disabled={anserwesSent}
-            onClick={validateSequence}
-          >
-            Enviar respuestas
-          </button>
-        </div>
+          Empezar
+        </button>
+        <button
+          className="button-30"
+          disabled={anserwesSent}
+          onClick={validateSequence}
+        >
+          Comprobar ruta
+        </button>
       </div>
       {anserwesSent && (
         <aside style={{ position: "absolute", right: "0", top: "50%" }}>
-          siguite test
+          siguiente
           <button onClick={handleNextTest}>test {currentTest}</button>
         </aside>
       )}
       <button style={{ marginLeft: 60 }}>
         <Link to="/report">Ver reporte</Link>
       </button>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://icons8.com/icon/o3EJ3VrJkeY4/gruesa-flecha-apuntando-hacia-arriba"
-            rel="noreferrer"
-          >
-            Gruesa flecha apuntando hacia arriba icon by Icons8
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://icons8.com/icon/eXJY0kFTvF4f/gruesa-flecha-apuntando-hacia-abajo"
-            rel="noreferrer"
-          >
-            Gruesa flecha apuntando hacia abajo icon by Icons8
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            rel="noreferrer"
-            href="https://icons8.com/icon/uauxHDCVDyl8/bug"
-          >
-            Bug icon by Icons8
-          </a>
-        </li>
-        <li>
-          <a
-            rel="noreferrer"
-            target="_blank"
-            href="https://icons8.com/icon/SSQknWWyQFW8/flecha-apuntando-hacia-la-izquierda"
-          >
-            Flecha apuntando hacia la izquierda icon by Icons8
-          </a>
-        </li>
-        <li>
-          <a
-            rel="noreferrer"
-            target="_blank"
-            href="https://icons8.com/icon/lx6QKDKp28mI/derecha"
-          >
-            Derecha icon by Icons8
-          </a>
-        </li>
-      </ul>
+    
     </div>
   );
 };
