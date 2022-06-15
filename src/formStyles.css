@@ -8,7 +8,7 @@ body{
 }
 
 h2{
-  padding-top: 1.5rem;
+  padding-top: 0.5rem;
 }
 
 a{
@@ -16,7 +16,7 @@ a{
 }
 
 a:hover{
-  color: #da5767;
+  color: #a0303d;
   text-decoration: none;
 }
 
@@ -34,8 +34,8 @@ a:hover{
 
 .form-control:focus {
     color: #000000;
-    background-color: #ffffff;
-    border: 3px solid #da5767;
+    background-color: #f3e4e4;
+    border: 3px solid #d58a10;
     outline: 0;
     box-shadow: none;
 
@@ -43,12 +43,12 @@ a:hover{
 
 .btn{
   padding: 0.6rem 1.2rem;
-  background: #da5767;
-  border: 2px solid #da5767;
+  background: #c57805;
+  border: 2px solid #c57805;
 }
 
 .btn-primary:hover {
-    background-color: #df8c96;
+    background-color: #d85b0d;
     border-color: #df8c96;
   transition: .3s;
 

@@ -1,3 +1,10 @@
+html,
+body>#root>div {
+  height: 100vh;
+  background-image: url("./images/Fondo.jpg");
+  /*background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);*/
+}
+
 .App {
   text-align: center;
 }
@@ -23,6 +30,7 @@ h1 {
 .fatherTitle {
   display: flex;
   justify-content: center;
+  margin-top: -20px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -53,8 +61,7 @@ h1 {
 
 .test {
   display: flex;
-  /*gap: 400px;*/
-  gap: 12px;
+  gap: 350px;
   justify-content: center;
 }
 
@@ -76,7 +83,8 @@ canvas {
 .ordersView {
   display: flex;
   flex-wrap: wrap;
-  width: 80px; /* 60px*/
+  width: 80px;
+  /* 60px*/
   height: 160px;
   justify-content: center;
   margin-top: 20px;
@@ -89,19 +97,19 @@ button {
 
 .buttonStyle {
   border-radius: 20px;
-  background-color: #61b0b7;
+  background-color: transparent;
   padding: 0.5rem;
 }
 
 .buttonLeftStyles {
   border-radius: 20px;
-  background-color: #da9604;
+  background-color: transparent;
   padding: 0.5rem;
 }
 
 .buttonRightStyles {
   border-radius: 20px;
-  background-color: #abab26;
+  background-color: transparent;
   padding: 0.5rem;
 }
 
@@ -126,14 +134,17 @@ li {
 }
 
 div.picture1 {
-  width: 100px; /*width of your image*/
-  height: 100px; /*height of your image*/
+  width: 100px;
+  height: 100px;
+  /*height of your image*/
   /* background-image: url("https://www.kindpng.com/imgv/TxhRTm_8-bit-mario-png-mario-bros-8-bits/"); */
   z-index: 0;
   background-color: "yellow";
-  margin: 0; /* If you want no margin */
-  padding: 0; /*if your want to padding */
-} 
+  margin: 0;
+  /* If you want no margin */
+  padding: 0;
+  /*if your want to padding */
+}
 
 
 /* CSS btn.30 Comprobar resultados*/
@@ -143,12 +154,12 @@ div.picture1 {
   background-color: #FCFCFD;
   border-radius: 4px;
   border-width: 0;
-  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
   box-sizing: border-box;
   color: #36395A;
   cursor: pointer;
   display: inline-flex;
-  font-family: "JetBrains Mono",monospace;
+  font-family: "JetBrains Mono", monospace;
   height: 48px;
   justify-content: center;
   line-height: 1;
@@ -159,12 +170,12 @@ div.picture1 {
   position: relative;
   text-align: left;
   text-decoration: none;
-  transition: box-shadow .15s,transform .15s;
+  transition: box-shadow .15s, transform .15s;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
   white-space: nowrap;
-  will-change: box-shadow,transform;
+  will-change: box-shadow, transform;
   font-size: 18px;
 }
 
@@ -182,97 +193,66 @@ div.picture1 {
   transform: translateY(2px);
 }
 
-/* CSS Boton iniciar prueba*/
-.button-86 {
-  all: unset;
-  width: 100px;
-  height: 30px;
+
+/* CSS */
+.button-54 {
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
-  background: transparent;
-  border: none;
-  position: relative;
-  color: #f0f0f0;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
   cursor: pointer;
-  z-index: 1;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  position: relative;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
 }
 
-.button-86::after,
-.button-86::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  z-index: -99999;
-  transition: all .4s;
+.button-54:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
 }
 
-.button-86::before {
-  transform: translate(0%, 0%);
-  width: 100%;
-  height: 100%;
-  background: #28282d;
-  border-radius: 10px;
-}
-
-.button-86::after {
-  transform: translate(10px, 10px);
-  width: 35px;
-  height: 35px;
-  background: #ffffff15;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border-radius: 50px;
-}
-
-.button-86:hover::before {
-  transform: translate(5%, 20%);
-  width: 110%;
-  height: 110%;
-}
-
-.button-86:hover::after {
-  border-radius: 10px;
-  transform: translate(0, 0);
-  width: 100%;
-  height: 100%;
-}
-
-.button-86:active::after {
-  transition: 0s;
-  transform: translate(0, 5%);
+@media (min-width: 768px) {
+  .button-54 {
+    padding: 0.25em 0.75em;
+  }
 }
 
 /* MODAL STYELS */
 #overlay {
-  position: fixed; /* Sit on top of the page content */
-  width: 100%; /* Full width (cover the whole page) */
-  height: 100%; /* Full height (cover the whole page) */
+  position: fixed;
+  /* Sit on top of the page content */
+  width: 100%;
+  /* Full width (cover the whole page) */
+  height: 100%;
+  /* Full height (cover the whole page) */
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-  z-index: 20; /* Specify a stack order in case you're using a different order for other elements */
-  cursor: pointer; /* Add a pointer on hover */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Black background with opacity */
+  z-index: 20;
+  /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer;
+  /* Add a pointer on hover */
 }
 
-.downSide{
+.downSide {
   transform: rotate(180deg);
 }
 
-.rightSide{
+.rightSide {
   transform: rotate(90deg);
 }
 
-.leftSide{
+.leftSide {
   transform: rotate(270deg);
 }
 
@@ -287,9 +267,8 @@ div.picture1 {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
-
-

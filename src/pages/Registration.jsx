@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
 import "../formStyles.css";
-import registrerStudent from "../api/endpoints/registrerStudent"
+import registrerStudent from "../api/endpoints/registerStudent";
 
 const Registration = () => {
   let navigate = useNavigate();
@@ -11,8 +11,8 @@ const Registration = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
+    reset,
   } = useForm();
 
   const onSubmit = (data) => {
@@ -31,6 +31,7 @@ const Registration = () => {
           }, 2000);
         }
     })
+
     .catch(function (error) {
       setAlert({
         show: true,
@@ -66,13 +67,13 @@ const Registration = () => {
                 <form onSubmit={handleSubmit(onSubmit)} _lpchecked="1">
                   <div className="form-group">
                     <input
-                      {...register("identification", { required: true })}
+                      {...register("codigo", { required: true })}
                       type="number"
                       className="form-control"
-                      id="identification"
+                      id="codigo"
                       placeholder="Cédula"
                     />
-                    {errors.identification && (
+                    {errors.codigo && (
                       <span style={{ color: "red" }}>
                         Este campo es obligatorio
                       </span>
@@ -80,13 +81,13 @@ const Registration = () => {
                   </div>
                   <div className="form-group">
                     <input
-                      {...register("name", { required: true })}
+                      {...register("nombre", { required: true })}
                       type="text"
                       className="form-control"
-                      id="name"
+                      id="nombre"
                       placeholder="Nombre completo"
                     />
-                    {errors.name && (
+                    {errors.nombre && (
                       <span style={{ color: "red" }}>
                         Este campo es obligatorio
                       </span>

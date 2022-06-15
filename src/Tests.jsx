@@ -4,6 +4,7 @@ import "./App.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Modal from "./components/Modal";
 import matriz from "./images/Matrix.jpeg";
+import getCoordinates from "./api/endpoints/gestTest";
 
 const Tests = () => {
   let navigate = useNavigate();
@@ -13,7 +14,8 @@ const Tests = () => {
   const [startTest, setStartTest] = useState();
   const [anserwesSent, setAnserwesSent] = useState(false);
   const [showTrace, setShowTrace] = useState();
-  let modifier = 38;
+  let modifier = 41.5;
+  let modifierSide = 45;
   const block = document.getElementById("block");
   const [displayArray, setDisplayArray] = useState([]);
   const [displayEl, setDisplayEl] = useState();
@@ -23,20 +25,20 @@ const Tests = () => {
   let { id } = useParams();
   const [test, setTest] = useState({});
   const [blockRoute, setBlockRoute] = useState([]);
-  
-  useEffect(() => { 
+
+  useEffect(() => {
     getCoordinates(id)
       .then(function (response) {
-        if(response){
+        if (response) {
           let data = response[0];
           setTest({
-            startPostion: {top: data[1], left: data[0]},
-            goalPosition: {top: data[3], left: data[2]},
+            startPostion: { top: data[1], left: data[0] },
+            goalPosition: { top: data[3], left: data[2] },
           });
         }
       })
-  })
-  
+  },[id])
+
   const { goalPosition, startPostion } = test || {};
 
   const handleDirectionClick = (e) => {
@@ -48,7 +50,7 @@ const Tests = () => {
 
       switch (e.target.name) {
         case "arriba":
-          if (`${parseInt(style.top) + modifier}` >= 207) {
+          if (`${parseInt(style.top) + modifier}` >= 214.5) {
             style.top = `${parseInt(style.top) - modifier}px`;
           } else {
             alert("Te saliste");
@@ -62,16 +64,16 @@ const Tests = () => {
           }
           break;
         case "izquierda":
-          if (`${parseInt(style.left) + modifier}` >= 350) {
-            style.left = `${parseInt(style.left) - modifier}px`;
+          if (`${parseInt(style.left) + modifierSide}` >= 317) {
+            style.left = `${parseInt(style.left) - modifierSide}px`;
           } else {
             alert("Te saliste");
           }
 
           break;
         case "derecha":
-          if (`${parseInt(style.left) + modifier}` <= 581) {
-            style.left = `${parseInt(style.left) + modifier}px`;
+          if (`${parseInt(style.left) + modifierSide}` <= 497) {
+            style.left = `${parseInt(style.left) + modifierSide}px`;
           } else {
             alert("Te saliste");
           }
@@ -126,30 +128,30 @@ const Tests = () => {
   };
 
   const validateSequence = () => {
-    if(startTest){
-    setCurrentTest(currentTest <= 5 ? currentTest + 1 : null);
-    setAnserwesSent(true);
+    if (startTest) {
+      setCurrentTest(currentTest <= 5 ? currentTest + 1 : null);
+      setAnserwesSent(true);
 
-    const { top, left } = goalPosition;
-    if (top === positionTop && left === positionLeft) {
-      setAlert({
-        show: true,
-        title: "Excelente",
-        message: "Has conseguido llegar al dragón",
-      });
-      revealBlock();
+      const { top, left } = goalPosition;
+      if (top === positionTop && left === positionLeft) {
+        setAlert({
+          show: true,
+          title: "Excelente",
+          message: "Has conseguido llegar al dragón",
+        });
+        revealBlock();
+      } else {
+        revealBlock();
+        setAlert({
+          show: true,
+          title: "Oh, rayos",
+          message: "Por poco lo consigues, presiona aceptar para pasar a la siguiente.",
+        });
+        return;
+      }
     } else {
-      revealBlock();
-      setAlert({
-        show: true,
-        title: "Oh, rayos",
-        message: "Por poco lo consigues, presiona aceptar para pasar a la siguiente.",
-      });
       return;
     }
-  } else{
-    return;
-  }
   };
 
   const delay = (ms) =>
@@ -186,7 +188,7 @@ const Tests = () => {
       <img
         className="imgBg"
         src={matriz}
-        style={{ display: "none", height: "80px" , width: "80px" }}
+        style={{ display: "none", height: "80px", width: "80px" }}
         alt="grid img"
       />
       <img
@@ -213,6 +215,7 @@ const Tests = () => {
           left: startPostion?.left,
         }}
         src="https://i.pinimg.com/originals/a5/f9/a2/a5f9a2eb5c0bfb1f66988696e1f31334.png"
+        // src="https://lasimagenesdegoku.com/wp-content/uploads/2018/02/Small-Goku.png"
         alt="start"
       />
       {showTrace &&
@@ -228,7 +231,8 @@ const Tests = () => {
               top: coodinates.top,
               left: coodinates.left,
             }}
-            src="https://i.pinimg.com/originals/a5/f9/a2/a5f9a2eb5c0bfb1f66988696e1f31334.png"
+           src="https://i.pinimg.com/originals/a5/f9/a2/a5f9a2eb5c0bfb1f66988696e1f31334.png"
+            // src="https://lasimagenesdegoku.com/wp-content/uploads/2018/02/Small-Goku.png"
             alt="start"
           />
         ))}
@@ -302,21 +306,21 @@ const Tests = () => {
       <div
         id="actions"
         style={{
-          /*display: "flex",
+          display: "flex",
           "justify-content": "center",
-          gap: "23px",*/
-          width: "20rem"
+          gap: "23px",
+          marginTop: "40px"
         }}
       >
         <button
-          className="button-86"
+          className="button-54"
           onClick={handleStartTest}
           disabled={startTest}
         >
           Empezar
         </button>
         <button
-          className="button-30"
+          className="button-54"
           disabled={anserwesSent}
           onClick={validateSequence}
         >
@@ -324,8 +328,8 @@ const Tests = () => {
         </button>
 
         <button style={{ marginLeft: 60 }}>
-        <Link to="/report">Reportes</Link>
-      </button>
+          <Link to="/report">Reportes</Link>
+        </button>
 
       </div>
       {anserwesSent && (
