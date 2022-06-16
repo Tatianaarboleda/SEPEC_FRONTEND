@@ -17,6 +17,7 @@ const Registration = () => {
 
   const onSubmit = (data) => {
     if (data) {
+      localStorage.setItem("codigo", data?.codigo);
       registrerStudent(data)
       .then(function (response) {
         if (response) {

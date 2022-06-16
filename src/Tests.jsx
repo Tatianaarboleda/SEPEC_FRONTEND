@@ -4,7 +4,8 @@ import "./App.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Modal from "./components/Modal";
 import matriz from "./images/Matrix.jpeg";
-import getCoordinates from "./api/endpoints/gestTest";
+import getCoordinates from "./api/endpoints/getTest";
+import registerTestResult from "./api/endpoints/registerTestResult";
 
 const Tests = () => {
   let navigate = useNavigate();
@@ -21,10 +22,11 @@ const Tests = () => {
   const [displayEl, setDisplayEl] = useState();
   const [alert, setAlert] = useState({ show: false, Title: "", message: "" });
   const [currentTest, setCurrentTest] = useState(1);
-  let instructionsList = document.querySelector(".odersView");
+  let instructionsList = document.querySelector(".ordersView");
   let { id } = useParams();
   const [test, setTest] = useState({});
   const [blockRoute, setBlockRoute] = useState([]);
+  let codigo = localStorage.getItem("codigo")
 
   useEffect(() => {
     getCoordinates(id)
@@ -37,12 +39,13 @@ const Tests = () => {
           });
         }
       })
-  },[id])
+      .catch(function (error) {
+      });
+  }, [id]);
 
   const { goalPosition, startPostion } = test || {};
 
   const handleDirectionClick = (e) => {
-    let instructionsList = document.querySelector(".ordersView");
     if (startTest && !anserwesSent) {
       instructionsList.innerHTML += e.target.name + "\n";
       setOrdersa((oldArray) => [...ordersa, e.target.name]);
@@ -53,21 +56,35 @@ const Tests = () => {
           if (`${parseInt(style.top) + modifier}` >= 214.5) {
             style.top = `${parseInt(style.top) - modifier}px`;
           } else {
-            alert("Te saliste");
+            setAlert({
+              show: true,
+              title: "CUIDADO",
+              message: "Estas en el borde",
+            });
+
           }
           break;
         case "abajo":
           if (`${parseInt(style.top) + modifier}` <= 433) {
             style.top = `${parseInt(style.top) + modifier}px`;
           } else {
-            alert("Te saliste");
+            setAlert({
+              show: true,
+              title: "CUIDADO",
+              message: "Estas en el borde",
+            });
           }
           break;
         case "izquierda":
           if (`${parseInt(style.left) + modifierSide}` >= 317) {
             style.left = `${parseInt(style.left) - modifierSide}px`;
           } else {
-            alert("Te saliste");
+            //alert("Te saliste");
+            setAlert({
+              show: true,
+              title: "CUIDADO",
+              message: "Estas en el borde",
+            });
           }
 
           break;
@@ -75,8 +92,14 @@ const Tests = () => {
           if (`${parseInt(style.left) + modifierSide}` <= 497) {
             style.left = `${parseInt(style.left) + modifierSide}px`;
           } else {
-            alert("Te saliste");
+            //alert("Te saliste");
+            setAlert({
+              show: true,
+              title: "CUIDADO",
+              message: "Estas en el borde",
+            });
           }
+
           break;
         default:
           break;
@@ -129,24 +152,60 @@ const Tests = () => {
 
   const validateSequence = () => {
     if (startTest) {
-      setCurrentTest(currentTest <= 5 ? currentTest + 1 : null);
+      setCurrentTest(currentTest <= 4 ? currentTest + 1 : null);
       setAnserwesSent(true);
-
       const { top, left } = goalPosition;
-      if (top === positionTop && left === positionLeft) {
-        setAlert({
-          show: true,
-          title: "Excelente",
-          message: "Has conseguido llegar al dragón",
-        });
+     
+      console.log(
+        positionTop === `${top + 1.5}px` || positionTop === `${top - 1.5}px`
+      );
+      if (
+        positionTop === `${top + 1.5}px` ||
+        (positionTop === `${top - 1.5}px` &&
+          positionLeft === `${left + 3}px`) ||
+        positionLeft === `${left - 3}px`
+      ) {
         revealBlock();
+        registerTestResult({
+          idPregunta: currentTest,
+          idEstudiante: codigo,
+          valoracion: 1,
+        })
+          .then(function (response) {
+            if (response === 200) {
+              setAlert({
+                show: true,
+                title: "Muy bien",
+                message: "Llegaste al Dragón.",
+              });
+            } else {
+              setAlert({
+                show: true,
+                title: "OH",
+                message: "No se pudo registrar la respuesta",
+              });
+            }
+          })
+          .catch(function (error) {
+          });
       } else {
         revealBlock();
-        setAlert({
-          show: true,
-          title: "Oh, rayos",
-          message: "Por poco lo consigues, presiona aceptar para pasar a la siguiente.",
-        });
+        registerTestResult({
+          idPregunta: currentTest,
+          idEstudiante: codigo,
+          valoracion: 0,
+        })
+          .then(function (response) {
+            if (response === 200) {
+              setAlert({
+                show: true,
+                title: "Mala suerte",
+                message: "Casi lo logras",
+              });
+            }
+          })
+          .catch(function (error) {
+          });
         return;
       }
     } else {
@@ -231,7 +290,7 @@ const Tests = () => {
               top: coodinates.top,
               left: coodinates.left,
             }}
-           src="https://i.pinimg.com/originals/a5/f9/a2/a5f9a2eb5c0bfb1f66988696e1f31334.png"
+            src="https://i.pinimg.com/originals/a5/f9/a2/a5f9a2eb5c0bfb1f66988696e1f31334.png"
             // src="https://lasimagenesdegoku.com/wp-content/uploads/2018/02/Small-Goku.png"
             alt="start"
           />
@@ -307,7 +366,7 @@ const Tests = () => {
         id="actions"
         style={{
           display: "flex",
-          "justify-content": "center",
+          "justifyContent": "center",
           gap: "23px",
           marginTop: "40px"
         }}
@@ -327,16 +386,27 @@ const Tests = () => {
           Comprobar ruta
         </button>
 
-        <button style={{ marginLeft: 60 }}>
+        <button
+          className="button-54"
+        >
           <Link to="/report">Reportes</Link>
         </button>
 
       </div>
-      {anserwesSent && (
+      {anserwesSent && currentTest != null && (
         <aside style={{ position: "absolute", right: "0", top: "50%" }}>
-          siguiente
-          <button onClick={handleNextTest}>test {currentTest}</button>
+          <button
+            className="button-54"
+            onClick={handleNextTest}> Next {currentTest}
+          </button>
         </aside>
+      )}
+      {currentTest == null && (
+        <div>
+          <nav className="navMenu">
+            <a href="/report">Reporte</a>
+          </nav>
+        </div>
       )}
     </div>
   );
