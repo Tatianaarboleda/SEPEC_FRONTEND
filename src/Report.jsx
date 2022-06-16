@@ -7,6 +7,7 @@ import getTestAverage from "./api/endpoints/getTestAverage";
 import registertestRating from "./api/endpoints/registertestRating";
 import { RangeStepInput } from "react-range-step-input";
 import "./styles/report.css"
+import getCoeficiente from "./api/endpoints/getCoeficiente";
 
 const Report = () => {
   const [students, setStudents] = useState();
@@ -17,6 +18,10 @@ const Report = () => {
   const [rangeValue2, setRangeValue2] = useState(0);
   const [rangeValue3, setRangeValue3] = useState(0);
   let codigo = localStorage.getItem("codigo");
+  const [capturarP, setCapturarP] = useState(1);
+  const [capturarO, setCapturarO] = useState(1);
+  const [respuesta, setRespuesta] = useState(1);
+
 
   const getStudentTestResults = () => {
     getStudentTest(codigo)
@@ -97,6 +102,27 @@ const Report = () => {
         //   title: "oh oh",
         //   message: error?.response?.data?.Mensaje,
         // });
+      });
+  };
+
+  const handleGetCoeficiente = () => {
+    getCoeficiente(capturarO, capturarP)
+      .then((res) => {
+        setRespuesta(res)
+        // setAlert({
+        //   show: true,
+        //   title: "Coeficiente intelectual",
+        //   message: res,
+        // });
+        console.log(res)
+      })
+      .catch((err) => {
+        // setAlert({
+        //   show: true,
+        //   title: "Coeficiente intelectual",
+        //   message: err?.response?.data?.Mensaje,
+        // });
+        console.log(err)
       });
   };
 
@@ -375,6 +401,37 @@ const Report = () => {
             </div>
           </div>
         </div>
+      </section>
+      <section>
+        <h3>Coeficiente de relación</h3>
+        <span>
+          {respuesta}
+        </span>
+        <div style={{ display: "flex" }}>
+          <select
+            onChange={(e) => {
+              setCapturarP(e.target.value);
+            }}
+            value={capturarP}
+          >
+            <option value={1}>pregunta 1</option>
+            <option value={2}>pregunta 2</option>
+            <option value={3}>pregunta 3</option>
+            <option value={4}>pregunta 4</option>
+            <option value={5}>pregunta 5</option>
+          </select>
+          <select
+            onChange={(e) => {
+              setCapturarO(e.target.value);
+            }}
+            value={capturarO}
+          >
+            <option value={1}>opinion 1</option>
+            <option value={2}>opinion 2</option>
+            <option value={3}>opinion 3</option>
+          </select>
+        </div>
+        <button onClick={ handleGetCoeficiente }>Obtener</button>
       </section>
     </>
   );
